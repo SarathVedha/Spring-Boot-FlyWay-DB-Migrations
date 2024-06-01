@@ -1,0 +1,51 @@
+server:
+  port: 8080
+
+spring:
+  datasource: # postgres
+    url: jdbc:postgresql://localhost:5432/Migration?currentSchema=flyway-demo
+    username: postgres
+    password: Rockers12$
+    hikari:
+      pool-name: Postgres-Connection-Pool
+      maximum-pool-size: 5
+      connection-timeout: 20000
+  jpa:
+#    Enable open-in-view: true to avoid LazyInitializationException
+#    Exception: Could not write JSON: failed to lazily initialize a collection of role: com.vedha.entity.UserEntity.roles: could not initialize proxy - no Session
+    open-in-view: true # Enable the open-in-view pattern default is true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+#        configured in jdbc url
+#        default_schema: flyway-demo # Default schema to use, if you want to use multiple schema then you can use it, default is none
+#        default_schema: public
+    hibernate:
+      ddl-auto: update # Migration Will Take Place Automatically, if you changed in entity not updated in migration, that will update, but if you want to disable it, then set it to none
+  flyway:
+    enabled: true # Enable Flyway default is true
+    locations: classpath:db/migration # Location of the migration scripts default is db/migration
+#    configured in jdbc url
+#    default-schema: flyway-demo # Default schema to use when executing migration default is none
+
+management:
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+    os:
+      enabled: true
+    java:
+      enabled: true
+    build:
+      enabled: true
