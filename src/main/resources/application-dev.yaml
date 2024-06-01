@@ -5,7 +5,7 @@ spring:
   datasource: # postgres
     url: jdbc:postgresql://localhost:5432/Migration?currentSchema=flyway-demo
     username: postgres
-    password: Rockers12$
+    password: postgres
     hikari:
       pool-name: Postgres-Connection-Pool
       maximum-pool-size: 5
@@ -27,6 +27,8 @@ spring:
   flyway:
     enabled: true # Enable Flyway default is true
     locations: classpath:db/migration # Location of the migration scripts default is db/migration
+    baseline-on-migrate: true # Baseline on migrate default is false
+    validate-on-migrate: true # Validate on migrate default is true
 #    configured in jdbc url
 #    default-schema: flyway-demo # Default schema to use when executing migration default is none
 
